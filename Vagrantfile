@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# (C) Copyright 2022 Hewlett Packard Enterprise Development LP.
+# (C) Copyright 2020-2022 Hewlett Packard Enterprise Development LP.
 
 Vagrant.require_version ">= 1.8.1"
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
