@@ -53,3 +53,5 @@ dkms.conf
 
 # Devenv
 .vagrant
+.Trash*
+.ipynb_checkpoints/
