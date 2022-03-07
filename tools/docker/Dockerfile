@@ -66,6 +66,7 @@ RUN apt-get update && apt-get --yes --no-install-recommends install \
 # Install packages for python
 COPY files/requirements.txt requirements.txt
 RUN python3 -m pip install -r requirements.txt && rm requirements.txt
+RUN jupyter contrib nbextension install
 
 # Update MOTD info
 RUN rm /etc/update-motd.d/10-help-text /etc/update-motd.d/50-motd-news /etc/update-motd.d/60-unminimize
