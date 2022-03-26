@@ -69,3 +69,29 @@ Una vez haya terminado con su desarrollo, puede "apagar" el contenedor con `vagr
 
 Usted tambien podría destruir el ambiente completamente (por ejemplo para actualizar
 a una version nueva del ambiente), puede hacerlo con `vagrant destroy`.
+
+Presentaciones con Jupyter Notebook
+-----------------------------------
+
+Para las presentaciones del curso se utiliza el programa Jupyter Notebook. Los notebooks son archivos interactivos en donde se coloca una serie de celdas que pueden contener tanto documentos en formato Markdown como snippets de código.
+
+Los notebooks pueden ser visualizados en un formato sencillo desde la página web del repositorio en GitHub, abriendo los archivos .ipynb. Sin embargo, para lograr el comportamiento interactivo y una mejor visualización se debe ejecutar el programa desde el ambiente de desarrollo.
+
+Para abrir Jupyter Notebook desde el vagrant, puede ejecutar el siguiente script:
+
+.. code-block:: bash
+
+  dev@ie0417-devel:~/ws$ ./run-jupyter-nb.sh
+
+    (...)
+
+    To access the notebook, open this file in a browser:
+        file:///home/dev/.local/share/jupyter/runtime/nbserver-5721-open.html
+    Or copy and paste one of these URLs:
+        http://172.17.0.2:8888/?token=92e2b76f9a108eec684116d8cd612c5f6a8f15869ff2329b
+     or http://127.0.0.1:8888/?token=92e2b76f9a108eec684116d8cd612c5f6a8f15869ff2329b
+
+
+Posteriormente, desde su navegador acceda a alguno de los URLs indicados por la salida del script. Desde la página web desplegada, puede acceder a las presentaciones del curso que se encuentran en el directorio `presentations/`, utilizando el navegador de archivos.
+
+Para más información sobre los Jupyter Notebooks y como ejecutarlos, refierase a la `documentación oficial de Jupyter <https://docs.jupyter.org/en/latest/>`_.
