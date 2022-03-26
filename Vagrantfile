@@ -17,7 +17,7 @@ end
 
 version = File.read("tools/docker/version").strip
 registry = "docker.io/"
-image_name = registry + "ezamoraa/ie0317:" + version
+image_name = registry + "ezamoraa/ie0417:" + version
 
 $adjust_user_script = <<SCRIPT
 sed -i -e "s/1000/$HOST_UID/" /etc/passwd
@@ -27,12 +27,13 @@ chown -R $HOST_UID:$HOST_GID /home/dev/ 2>/dev/null 1>&2 || true
 SCRIPT
 
 Vagrant.configure("2") do |config|
-  config.vm.hostname = "ie0317-devel"
+  config.vm.hostname = "ie0417-devel"
   config.vm.provider "docker" do |docker|
     docker.image = image_name
     docker.has_ssh = true
     docker.auth_server = registry
     docker.pull = true
+    docker.privileged = true
   end
   config.ssh.username = "dev"
   config.ssh.forward_agent = true

@@ -21,8 +21,8 @@ Clone the repository from GitHub, then start the vagrant environment
 
 .. code-block:: bash
 
-   git clone https://github.com/ezamoraa/ie0317
-   cd ie0317
+   git clone https://github.com/ezamoraa/ie0417
+   cd ie0417
    vagrant up
 
 .. tip::
@@ -38,19 +38,19 @@ connection via ssh by running `vagrant ssh` and the output should look like:
   $ vagrant ssh
   Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.15.21-1-linux x86_64)
 
-  $$$$$$\ $$$$$$$$\        $$$$$$\   $$$$$$\    $$\   $$$$$$$$\
-  \_$$  _|$$  _____|      $$$ __$$\ $$ ___$$\ $$$$ |  \____$$  |
-    $$ |  $$ |            $$$$\ $$ |\_/   $$ |\_$$ |      $$  /
-    $$ |  $$$$$\          $$\$$\$$ |  $$$$$ /   $$ |     $$  /
-    $$ |  $$  __|         $$ \$$$$ |  \___$$\   $$ |    $$  /
-    $$ |  $$ |            $$ |\$$$ |$$\   $$ |  $$ |   $$  /
-  $$$$$$\ $$$$$$$$\       \$$$$$$  /\$$$$$$  |$$$$$$\ $$  /
-  \______|\________|       \______/  \______/ \______|\__/
+  $$$$$$\ $$$$$$$$\        $$$$$$\  $$\   $$\   $$\   $$$$$$$$\
+  \_$$  _|$$  _____|      $$$ __$$\ $$ |  $$ |$$$$ |  \____$$  |
+    $$ |  $$ |            $$$$\ $$ |$$ |  $$ |\_$$ |      $$  /
+    $$ |  $$$$$\          $$\$$\$$ |$$$$$$$$ |  $$ |     $$  /
+    $$ |  $$  __|         $$ \$$$$ |\_____$$ |  $$ |    $$  /
+    $$ |  $$ |            $$ |\$$$ |      $$ |  $$ |   $$  /
+  $$$$$$\ $$$$$$$$\       \$$$$$$  /      $$ |$$$$$$\ $$  /
+  \______|\________|       \______/       \__|\______|\__/
 
-        IE0317 development environment 22.03.0
+        IE0417 development environment 22.03.0
 
   Last login: Mon Feb 28 04:26:37 2022 from 172.17.0.1
-  dev@ie0317-devel:~/ws$
+  dev@ie0417-devel:~/ws$
 
 .. note::
 

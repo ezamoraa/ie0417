@@ -2,7 +2,7 @@
 
 .PHONY: image publish
 
-DOCKER_IMAGE=ezamoraa/ie0317
+DOCKER_IMAGE=ezamoraa/ie0417
 VERSION=$(shell cat version)
 REGISTRY=docker.io
 

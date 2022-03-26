@@ -1,11 +1,11 @@
-.. IE0317 Demo documentation master file
+.. IE0417 Demo documentation master file
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to IE0317 Demo's documentation!
+Welcome to IE0417 Demo's documentation!
 ==================================================
 
-This documentation elaborates on demo environment for the IE0317 course at EIE, UCR.
+This documentation elaborates on demo environment for the IE0417 course at EIE, UCR.
 
 This demo aims to provide ways to leverage Open Source components and knowledge
 to improve the development of software projects. This repository and documentation
