@@ -1,23 +1,23 @@
-Getting Started
-===============
+Primeros pasos
+==============
 
-The development environment is meant to run on any platform where Linux
-containers are supported, but has been actively tested on MacOS (with Docker
-Desktop), and Ubuntu Linux hosts.
+Este ambiente de desarrollo está orientado a correr en cualquier plataforma
+en donde contenedores de Linux sean soportados, pero ha sido principalmente
+probado en hosts de Ubuntu.
 
-Requirements
-------------
+Requisitos
+----------
 
-- **Vagrant** to control the development environment, please follow install
-  `instructions for your platform here <https://www.vagrantup.com/downloads.html>`_.
-- **Docker** to provide a lightweight container based environment for vagrant.
-  Please follow the `install instructions for your platform <https://docs.docker.com/install/>`_.
-- **Git** client to be able to clone the repository
+- **Vagrant** para controlar el ambiente de desarrollo, por favor siga las
+  `instrucciones de instalación para su plataforma <https://www.vagrantup.com/downloads.html>`_.
+- **Docker** para proveer un ambiente liviano basado en contenedores para vagrant.
+  Por favor siga las `instrucciones de instalación para su plataforma <https://docs.docker.com/install/>`_.
+- **Git** cliente para clonar el repositorio
 
-Cloning and Starting
---------------------
+Clonar e Iniciar
+----------------
 
-Clone the repository from GitHub, then start the vagrant environment
+Clone el repositorio de GitHub, luego inicie el ambiente de vagrant
 
 .. code-block:: bash
 
@@ -27,11 +27,11 @@ Clone the repository from GitHub, then start the vagrant environment
 
 .. tip::
 
-   This process may take some time the first time, as Docker will start downloading
-   the container image from the public docker registry hub.
+   Este proceso podría tomar un tiempo la primera vez, ya que Docker va a empezar
+   a descargar la imagen del contenedor desde el registro público de Docker.
 
-Once the Vagrant machine is up and running, you can establish a secure remote
-connection via ssh by running `vagrant ssh` and the output should look like:
+Una vez la máquina de Vagrant está arriba y corriendo, puede establecer una
+conexión remota segura por ssh con `vagrant ssh` y la salida debe ser similar a:
 
 .. code-block:: bash
 
@@ -54,20 +54,19 @@ connection via ssh by running `vagrant ssh` and the output should look like:
 
 .. note::
 
-   The vagrant is configured to sync some folders from your host machine into
-   your development machine, in special the folder with the git repo is available
-   at `~/ws` and that is your default folder when doing ssh.
+   El vagrant está configurado para sincronizar algunos directorios desde su máquina
+   host hacia su máquina de desarrollo, en especial el directorio con el repositorio
+   de git está disponible en `~/ws` y es su directorio por defecto al hacer SSH.
 
 .. tip::
 
-   You can open as many SSH sessions as you want. Some code editors like Visual
-   Studio Code support `ssh remote edition <https://code.visualstudio.com/docs/remote/ssh>`_, which is very convenient.
+   Usted puede abrir tantas sesiones SSH como quiera. Algunos editores de código
+   como Visual Studio Code soportan `ssh remote edition <https://code.visualstudio.com/docs/remote/ssh>`_, lo cual es conveniente.
 
-Life cycle of the development machine
--------------------------------------
+Ciclo de vida de la máquina de desarrollo
+-----------------------------------------
 
-Once you are done with your development, you may want to "turn off" the container
-with `vagrant halt`.
+Una vez haya terminado con su desarrollo, puede "apagar" el contenedor con `vagrant halt`.
 
-You may also need to destroy the environment altogether (for example to upgrade
-to a new version of the environment), and you can do that with `vagrant destroy`.
+Usted tambien podría destruir el ambiente completamente (por ejemplo para actualizar
+a una version nueva del ambiente), puede hacerlo con `vagrant destroy`.
