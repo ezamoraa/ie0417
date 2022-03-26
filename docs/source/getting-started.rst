@@ -7,12 +7,11 @@ probado en hosts de Ubuntu.
 
 Requisitos
 ----------
-
-- **Vagrant** para controlar el ambiente de desarrollo, por favor siga las
-  `instrucciones de instalación para su plataforma <https://www.vagrantup.com/downloads.html>`_.
-- **Docker** para proveer un ambiente liviano basado en contenedores para vagrant.
+* **Vagrant** para controlar el ambiente de desarrollo, por favor siga las
+  `instrucciones de instalación para su plataforma aquí <https://www.vagrantup.com/downloads.html>`_.
+* **Docker** para proveer un ambiente liviano basado en contenedores para vagrant.
   Por favor siga las `instrucciones de instalación para su plataforma <https://docs.docker.com/install/>`_.
-- **Git** cliente para clonar el repositorio
+* **Git** cliente para clonar el repositorio
 
 Clonar e Iniciar
 ----------------

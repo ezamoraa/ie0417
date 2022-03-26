@@ -5,12 +5,12 @@
 Bienvenido al curso IE0417 @ EIE, UCR!
 ======================================
 
-Esta documentación elabora en el ambiente de desarrollo base para el curso IE0417
+Esta documentación describe el ambiente de desarrollo base para el curso IE0417
 de la Escuela de Ingeniería Eléctrica, Universidad de Costa Rica (UCR).
 
-Este ambiente busca proveer mecanismos que aprovechan componentes Open Source para
-mejorar el desarrollo de proyectos de software. Este repositorio y documentación
-proveen un ejemplo funcional de múltiples tecnologías:
+Este ambiente busca aprovechar componentes Open Source para mejorar el desarrollo
+de proyectos de software. Este repositorio y documentación proveen un ejemplo
+funcional de múltiples tecnologías:
 
 - Un ambiente de desarrollo reproducible basado en Vagrant y Docker
 - Un sistema de documentación basado en Sphinx y ReadtheDocs

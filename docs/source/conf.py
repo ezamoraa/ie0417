@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'IE0417'
-copyright = '2020-2022, Hewlett Packard Enterprise Development LP.'
-author = 'Diego Dompe, Esteban Zamora'
+copyright = '2022, Universidad de Costa Rica.'
+author = 'Esteban Zamora'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0'
