@@ -2,7 +2,7 @@
 
 cat /etc/update-motd.d/static
 
-echo -n "        IE0317 development environment "
+echo -n "        IE0417 development environment "
 cat /etc/env_version
 
 echo
