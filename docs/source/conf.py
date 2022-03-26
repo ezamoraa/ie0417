@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'IE0417 Demo'
+project = 'IE0417'
 copyright = '2020-2022, Hewlett Packard Enterprise Development LP.'
 author = 'Diego Dompe, Esteban Zamora'
 

@@ -1,19 +1,20 @@
-.. IE0417 Demo documentation master file
+.. IE0417 documentation master file
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to IE0417 Demo's documentation!
-==================================================
+Bienvenido al curso IE0417 @ EIE, UCR!
+======================================
 
-This documentation elaborates on demo environment for the IE0417 course at EIE, UCR.
+Esta documentación elabora en el ambiente de desarrollo base para el curso IE0417
+de la Escuela de Ingeniería Eléctrica, Universidad de Costa Rica (UCR).
 
-This demo aims to provide ways to leverage Open Source components and knowledge
-to improve the development of software projects. This repository and documentation
-provide a working example of several technologies:
+Este ambiente busca proveer mecanismos que aprovechan componentes Open Source para
+mejorar el desarrollo de proyectos de software. Este repositorio y documentación
+proveen un ejemplo funcional de múltiples tecnologías:
 
-- A reproducible development environment based on Vagrant and Docker
-- A Documentation system based on Sphinx and ReadtheDocs
-- A Continuous Integration system based on GitHub
+- Un ambiente de desarrollo reproducible basado en Vagrant y Docker
+- Un sistema de documentación basado en Sphinx y ReadtheDocs
+- Un sistema de Integración Continue basado en GitHub
 
 .. toctree::
    :maxdepth: 2
@@ -22,8 +23,8 @@ provide a working example of several technologies:
    getting-started
 
 
-Indices and tables
-==================
+Indices y tablas
+================
 
 * :ref:`genindex`
 * :ref:`modindex`
