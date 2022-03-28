@@ -1,0 +1,10 @@
+{
+  "rise": {
+    "transition": "fade",
+    "enable_chalkboard": true,
+    "theme": "white"
+  },
+  "load_extensions": {
+    "splitcell/splitcell": true
+  }
+}
