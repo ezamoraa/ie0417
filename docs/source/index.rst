@@ -18,7 +18,7 @@ funcional de múltiples tecnologías:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contenidos
 
    getting-started
 
