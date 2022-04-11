@@ -8,7 +8,7 @@ Requisitos previos
 * Asegurarse de tener una cuenta activa en `GitHub <https://github.com/>`_ y `Read the Docs <https://readthedocs.org/>`_. Para `Read the Docs` puede registrarse con la misma cuenta de GitHub.
 * Hacer un fork personal del repositorio `ie0417-dev <https://github.com/ezamoraa/ie0417-dev>`_. Este repositorio tiene el mismo ambiente base que `ie0417 <https://github.com/ezamoraa/ie0417>`_ pero sin las presentaciones ni enunciados del curso. Para esto puede utilizar el botón `Fork` que se encuentra en el sitio del repositorio. Para más detalles sobre este proceso puede consultar la siguiente `guía de forking <https://docs.github.com/en/get-started/quickstart/fork-a-repo>`_.
 * Clone su repositorio del fork, este lo utilizará a lo largo del curso para presentar sus laboratorios y proyectos. De ser necesario, posteriormente podrá hacer rebase del repositorio original `ie0417-dev <https://github.com/ezamoraa/ie0417-dev>`_ agregándolo como `remote` en Git.
-* Importar el proyecto de su repositorio del fork en `Read the Docs`. A la hora de asignar el nombre del proyecto en `Read the Docs` utilice el formato ``ie0417-dev-<carné UCR>`` para evitar conflictos de dominio, por ejemplo ``ie0417-dev-b47769``. Para más detalles puede consultar el siguiente `tutorial de `Read the Docs` <https://docs.readthedocs.io/en/stable/tutorial/>`_.
+* Importar el proyecto de su repositorio del fork en `Read the Docs`. A la hora de asignar el nombre del proyecto en `Read the Docs` utilice el formato ``ie0417-dev-<carné UCR>`` para evitar conflictos de dominio, por ejemplo ``ie0417-dev-b47769``. Para más detalles puede consultar el siguiente `tutorial de Read the Docs <https://docs.readthedocs.io/en/stable/tutorial/>`_.
 
 Introducción
 ============
@@ -194,7 +194,7 @@ Revisión
 --------
 
 * Se debe demostrar con base en los autores de los commits de Git que todos los miembros del grupo trabajaron colaborativamente en el laboratorio utilizando control de versiones. De no ser así, no se asignará puntaje a los miembros que no contribuyeron (a menos que se justifique una excepción).
-* Se utilizará la fecha del último commit de `merge` que modifique la documentación del laboratorio respectivo para determinar si la entrega se realizó a tiempo.
+* Se utilizará la fecha del último commit de `merge` de un Pull Request (PR) de GitHub que modifique la documentación del laboratorio respectivo para determinar si la entrega se realizó a tiempo.
 * Si se realizan entregas tardías, se rebajará 10% acumulativo por cada día extra (-10% primer día, -20% segundo día, etc).
 * Se revisará la página de documentación de `Read the Docs` indicada en la tarea de Mediación Virtual del laboratorio.
 * Para los grupos, sólo es necesario subir los cambios en el repositorio de uno de los miembros. Los demás miembros pueden hacer referencia a dicho repositorio y/o sincronizar los cambios en sus repositorios correspondientes.
