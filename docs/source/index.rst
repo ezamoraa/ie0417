@@ -14,13 +14,14 @@ funcional de múltiples tecnologías:
 
 - Un ambiente de desarrollo reproducible basado en Vagrant y Docker
 - Un sistema de documentación basado en Sphinx y ReadtheDocs
-- Un sistema de Integración Continue basado en GitHub
+- Un sistema de Integración Continua basado en GitHub
 
 .. toctree::
    :maxdepth: 2
    :caption: Contenidos
 
    getting-started
+   labs/labs
 
 
 Indices y tablas
