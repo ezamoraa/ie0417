@@ -29,7 +29,7 @@ De este diagrama es importante notar que ``Client`` es un componente externo al 
 
 Al consultar más detalles sobre la funcionalidad del sistema, se determinó que:
 
-* ``eieManager`` debe exponer un `Application Programming Interface` (API) para controlar los dispositivos de la fábrica desde ``Client``.
+* ``eieManager`` debe exponer un `Application Programming Interface (API) <https://www.mulesoft.com/resources/api/what-is-an-api>`_ para controlar los dispositivos de la fábrica desde ``Client``.
 
 * Los dispositivos pueden generar respuestas a los comandos que se deben entregar de vuelta al cliente.
 
@@ -144,17 +144,72 @@ Diagramas UML
 -------------
 * Implemente los diagrama de clases de los componentes de ``eieManager`` y ``eieDevice``.
 
-  * Asegúrese de representar relaciones de uso, composición y generalización entre los diferentes subsistemas y objetos. La generalización es especialmente importante para representar el polimorfismo necesario al tener que soportar diferentes dispositivos (``Device``), protocolos de transporte (``TransportClient``) y comandos (``Command``).
+  * Asegúrese de representar relaciones de uso, composición y generalización entre los diferentes subsistemas y objetos. La generalización es especialmente importante para representar el polimorfismo necesario al tener que soportar diferentes dispositivos (``Device``), protocolos de transporte (``TransportClient``) y comandos (``Command``), de manera genérica.
   * No describa de forma detallada los atributos ni los métodos de las clases. Sí incluya los nombres de algunos métodos relevantes para la interacción entre los subsistemas.
 
 * Implemente diagramas de secuencia que muestren la interacción completa entre los subsistemas de ``eieManager`` y ``eieDevice`` para los siguientes escenarios:
 
   * El cliente envía un comando a un dispositivo específico.
-  * El cliente envía un comando a un grupo de broadcast (este caso debe mostrar concurrencia al esperar por las respuestas de los diferentes dispositivos).
+  * El cliente envía un comando a un grupo de broadcast.
 
 .. note::
 
-   Para la realización de estos diagramas se debe utilizar la extensión de `PlantUML` para Sphinx.
+   Para la realización de estos diagramas se debe utilizar la extensión de `PlantUML` para Sphinx. Esta extensión ya está instalada en el ambiente base. Por ejemplo:
+
+.. uml::
+
+   @startuml
+
+   title Relationships - Class Diagram
+
+
+   class Dwelling {
+     +Int Windows
+     +void LockTheDoor()
+   }
+
+   class Apartment
+   class House
+   class Commune
+   class Window
+   class Door
+
+   Dwelling <|-down- Apartment: Inheritance
+   Dwelling <|-down- Commune: Inheritance
+   Dwelling <|-down- House: Inheritance
+   Dwelling "1" *-up- "many" Window: Composition
+   Dwelling "1" *-up- "many" Door: Composition
+
+   @enduml
+
+.. uml::
+
+  @startuml
+  Alice -> Bob: Authentication Request
+
+  alt successful case
+
+      Bob -> Alice: Authentication Accepted
+
+  else some kind of failure
+
+      Bob -> Alice: Authentication Failure
+      group My own label
+      Alice -> Log : Log attack start
+          loop 1000 times
+              Alice -> Bob: DNS Attack
+          end
+      Alice -> Log : Log attack end
+      end
+
+  else Another type of failure
+
+    Bob -> Alice: Please repeat
+
+  end
+  @enduml
+
+
 
 Evaluación
 ==========
