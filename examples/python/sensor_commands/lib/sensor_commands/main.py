@@ -5,7 +5,7 @@ from random import choice
 from . import command
 from .args import parse_args
 from .sensor.manager import SensorManager
-from .sensor.analyzers import avg_thresh_analyzer as avt
+from .sensor.analyzers import avg_thresh as avt
 
 
 log = logging.getLogger(__name__)
