@@ -52,6 +52,14 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Python packages
+*.egg
+*.egg-info
+dist/*
+build/*
+*.py[cod]
+__pycache__
+
 # Devenv
 .vagrant
 .Trash*

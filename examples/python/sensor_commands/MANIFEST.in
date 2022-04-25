@@ -1,0 +1,5 @@
+include README.md LICENSE
+include requirements.txt
+include config/*
+exclude test/*
+global-exclude __pycache__ *.py[co]
