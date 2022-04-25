@@ -54,3 +54,9 @@ class CommandRunner:
                 break
             with self.cmd_rate_limiter:
                 cmd.execute()
+
+__all__ = [
+    "Command",
+    "MessageCommand",
+    "CommandRunner",
+]
