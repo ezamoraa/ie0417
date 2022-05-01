@@ -1,5 +1,4 @@
 import logging
-from time import sleep
 from random import choice
 
 from . import command
@@ -13,11 +12,7 @@ log = logging.getLogger(__name__)
 
 def main():
     """
-    Application main function.
-    :param args: An arguments namespace.
-    :type args: :py:class:`argparse.Namespace`
-    :return: Exit code.
-    :rtype: int
+    Sensor commands application main function.
     """
     args = parse_args()
 
@@ -28,11 +23,14 @@ def main():
     analyzer_avg_thresh = 10
     num_read_commands = 200
 
+    # Set up command runners
     sensor_mgr = SensorManager(config_name)
-    sensor_cmd_runner = command.CommandRunner(cmd_per_period=sensor_cmd_per_period,
-                                              period_sec=sensor_period_sec)
-    alert_cmd_runner = command.CommandRunner(cmd_per_period=alert_cmd_per_period,
-                                             period_sec=alert_period_sec)
+    sensor_cmd_runner = command.CommandRunner(
+        cmd_per_period=sensor_cmd_per_period,
+        period_sec=sensor_period_sec)
+    alert_cmd_runner = command.CommandRunner(
+        cmd_per_period=alert_cmd_per_period,
+        period_sec=alert_period_sec)
     sensor_cmd_runner.start()
     alert_cmd_runner.start()
 
@@ -45,9 +43,11 @@ def main():
     temp_sensor_names = sensor_mgr.get_sensor_names_per_type(sensor_type_name)
     for _ in range(num_read_commands):
         rand_sensor_name = choice(temp_sensor_names)
-        read_cmd = sensor_mgr.create_sensor_read_cmd(rand_sensor_name, analyzer)
+        read_cmd = sensor_mgr.create_sensor_read_cmd(rand_sensor_name,
+                                                     analyzer)
         sensor_cmd_runner.send(read_cmd)
 
+    # Teardown command runners
     sensor_cmd_runner.stop()
     alert_cmd_runner.stop()
 
