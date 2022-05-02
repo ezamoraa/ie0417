@@ -26,9 +26,9 @@ def mult_sum(a, b, c):
     """
     Multiply and sum operation.
 
-    :param a: First multiply operator
-    :param b: Second multiply operator
-    :param c: Sum operator
+    :param a: First multiply operator.
+    :param b: Second multiply operator.
+    :param c: Sum operator.
     """
     return a * b + c
 
