@@ -4,7 +4,7 @@ Laboratorio 1
 
 Requisitos previos
 ==================
-* Siga las instrucciones de `Primeros pasos <../getting-started.html>`_ para preparar el ambiente base del curso.
+* Siga las instrucciones de `Primeros pasos <../../getting-started.html>`_ para preparar el ambiente base del curso.
 * Asegurarse de tener una cuenta activa en `GitHub <https://github.com/>`_ y `Read the Docs <https://readthedocs.org/>`_. Para `Read the Docs` puede registrarse con la misma cuenta de GitHub.
 * Hacer un fork personal del repositorio `ie0417-dev <https://github.com/ezamoraa/ie0417-dev>`_. Este repositorio tiene el mismo ambiente base que `ie0417 <https://github.com/ezamoraa/ie0417>`_ pero sin las presentaciones ni enunciados del curso. Para esto puede utilizar el botón `Fork` que se encuentra en el sitio del repositorio. Para más detalles sobre este proceso puede consultar la siguiente `guía de forking <https://docs.github.com/en/get-started/quickstart/fork-a-repo>`_.
 * Clone su repositorio del fork, este lo utilizará a lo largo del curso para presentar sus laboratorios y proyectos. De ser necesario, posteriormente podrá hacer rebase del repositorio original `ie0417-dev <https://github.com/ezamoraa/ie0417-dev>`_ agregándolo como `remote` en Git.

@@ -30,6 +30,7 @@ log = logging.getLogger(__name__)
 def validate_args(args):
     """
     Check that arguments are valid.
+
     :param args: An arguments namespace.
     :type args: :py:class:`argparse.Namespace`
     :return: The validated namespace.
@@ -44,6 +45,7 @@ def validate_args(args):
 def parse_args(argv=None):
     """
     Argument parsing routine.
+
     :param list argv: A list of argument strings.
     :return: A parsed and verified arguments namespace.
     :rtype: :py:class:`argparse.Namespace`
