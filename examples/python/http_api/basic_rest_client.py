@@ -8,6 +8,7 @@ import functools
 import json.decoder
 from pprint import pformat
 
+
 def main():
     default_url = 'http://127.0.0.1:8000'
     sys_url = sys.argv[1] if (len(sys.argv) >= 2) else None
