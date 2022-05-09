@@ -1,0 +1,28 @@
+{
+    "sensors": [
+        {
+            "name": "temp-eie101",
+            "type": "temperature"
+        },
+        {
+            "name": "temp-eie204",
+            "type": "temperature"
+        },
+        {
+            "name": "temp-eie206",
+            "type": "temperature"
+        },
+        {
+            "name": "temp-eie208",
+            "type": "temperature"
+        },
+        {
+            "name": "level-eie301",
+            "type": "level"
+        },
+        {
+            "name": "level-eie202",
+            "type": "level"
+        }
+    ]
+}
