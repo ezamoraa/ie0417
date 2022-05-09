@@ -1,0 +1,8 @@
+#include <sensor_commands/version.h>
+
+static const char * LIB_VERSION = "@VERSION@";
+
+int sensor_commands_version(const char **version) {
+    *version = LIB_VERSION;
+    return 0;
+}
