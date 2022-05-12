@@ -10,7 +10,7 @@ struct LevelSensorState {
 static double level_sensor_read(struct SensorInfo *info, void *priv)
 {
     struct LevelSensorState *state = priv;
-    printf("Reading level sensor with name: %s", info->name);
+    printf("Reading level sensor with name %s\n", info->name);
     return state->value;
 }
 

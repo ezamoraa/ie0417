@@ -193,6 +193,18 @@ struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg)
     return smgr;
 }
 
+struct Sensor *sensor_manager_sensor_get(struct SensorManager *smgr,
+                                         const char *name)
+{
+    struct SensorHashEntry *entry = NULL;
+    HASH_FIND(hh, smgr->sensor_ht, name, strlen(name), entry);
+    if (entry == NULL) {
+        fprintf(stderr, "Sensor entry not found for name: %s\n", name);
+        return NULL;
+    }
+    return entry->snr;
+}
+
 void sensor_manager_destroy(struct SensorManager *smgr)
 {
     sensor_ht_destroy(smgr);

@@ -18,8 +18,15 @@ int main(int argc, char **argv) {
     bool flag = false;
     struct SensorManagerConfig smgr_cfg = {};
     struct SensorManager *smgr = NULL;
+    struct Sensor *snr = NULL;
     const char *version = NULL;
     char cfg_filename[PATH_MAX + 1];
+
+    const char *sensor_names[] = {
+      "temp-eie206",
+      "level-eie301",
+      ""
+    };
 
     while((opt = getopt(argc, (char *const *)argv, "b:c:f")) != -1) {
         switch(opt) {
@@ -44,12 +51,26 @@ int main(int argc, char **argv) {
 
     printf("lib version: %s\n", version);
 
-    // Setup sensor manager
+    // Create sensor manager
     smgr_cfg.cfg_filename = cfg_filename;
     smgr = sensor_manager_create(&smgr_cfg);
     if (smgr == NULL) {
         fprintf(stderr, "Failed to create sensor manager\n");
         return -1;
+    }
+
+    // Try to use some sensors
+    for (int i=0;; i++) {
+        const char *name = sensor_names[i];
+        if (strlen(name) == 0) break;
+
+        snr = sensor_manager_sensor_get(smgr, name);
+        if (snr != NULL) {
+            double val = sensor_read(snr);
+            printf("Read value: %f\n", val);
+        } else {
+            printf("Sensor with name %s not found\n", name);
+        }
     }
 
     sensor_manager_destroy(smgr);

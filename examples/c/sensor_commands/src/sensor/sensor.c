@@ -19,6 +19,15 @@ struct Sensor *sensor_create(struct SensorInfo *info,
     return snr;
 }
 
+double sensor_read(struct Sensor *snr)
+{
+    double val = 0;
+    if (snr->ops && snr->ops->read) {
+        val = snr->ops->read(&snr->info, snr->priv);
+    }
+    return val;
+}
+
 void sensor_destroy(struct Sensor *snr)
 {
     free(snr);

@@ -48,7 +48,7 @@ static int ctor_ht_create(struct SensorFactory *sf)
     sf->ctor_ht = NULL;
 
     // Create ctors from info array and add them to hash table
-    for (int i=0 ; ; i++) {
+    for (int i=0;; i++) {
         struct SensorCtorInfo *info = &ctors_info[i];
         // The last info struct should have type == ""
         if ((strlen(info->type) == 0) ||

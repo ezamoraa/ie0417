@@ -21,6 +21,8 @@ struct Sensor *sensor_create(struct SensorInfo *info,
                              struct SensorOps *ops,
                              void *priv);
 
+double sensor_read(struct Sensor *snr);
+
 void sensor_destroy(struct Sensor *snr);
 
 #endif // SENSOR_H_

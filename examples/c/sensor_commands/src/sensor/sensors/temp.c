@@ -10,7 +10,7 @@ struct TempSensorState {
 static double temp_sensor_read(struct SensorInfo *info, void *priv)
 {
     struct TempSensorState *state = priv;
-    printf("Reading temp sensor with name: %s", info->name);
+    printf("Reading temp sensor with name: %s\n", info->name);
     return state->value;
 }
 
