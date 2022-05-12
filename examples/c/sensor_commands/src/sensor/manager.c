@@ -4,10 +4,12 @@
 #include <errno.h>
 
 #include <sensor_commands/sensor/manager.h>
+#include "sensors/factory.h"
 
 struct SensorManager {
     struct SensorManagerConfig cfg;
     cJSON *cfg_cjson;
+    struct SensorFactory *sfactory;
 };
 
 static cJSON *cjson_handle_create(const char *filename)
@@ -124,6 +126,12 @@ struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg)
     }
     smgr->cfg_cjson = cjson;
 
+    smgr->sfactory = sensor_factory_create();
+    if (smgr->sfactory == NULL) {
+        fprintf(stderr, "Failed to create sensor factory\n");
+        return NULL;
+    }
+
     ret = sensors_init(smgr);
     if (ret) {
         fprintf(stderr, "Failed to init sensors with ret=%d\n", ret);
@@ -135,6 +143,7 @@ struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg)
 
 void sensor_manager_destroy(struct SensorManager *smgr)
 {
+    sensor_factory_destroy(smgr->sfactory);
     cjson_handle_destroy(smgr->cfg_cjson);
     free(smgr);
 }
