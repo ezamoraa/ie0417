@@ -7,18 +7,22 @@
 #include <sensor_commands/sensor/manager.h>
 #include "sensors/factory.h"
 
+/** Entry structure to support adding sensors to an UT hash table */
 struct SensorHashEntry {
     struct Sensor *snr;
     UT_hash_handle hh;
 };
 
+/** Sensor manager structure declaration (not exposed) */
 struct SensorManager {
     struct SensorManagerConfig cfg;
     cJSON *cfg_cjson;
     struct SensorFactory *sf;
+    /** Head entry for the sensor hash table */
     struct SensorHashEntry *sensor_ht;
 };
 
+/** Creates a cJSON handle from the data read from a file */
 static cJSON *cjson_handle_create(const char *filename)
 {
     int ret;
@@ -74,11 +78,13 @@ static cJSON *cjson_handle_create(const char *filename)
     return cjson;
 }
 
+/** Destroys a cJSON handle */
 static void cjson_handle_destroy(cJSON* cjson)
 {
     cJSON_Delete(cjson);
 }
 
+/** Add sensor to the manager's sensor hash table */
 static int sensor_ht_add(struct SensorManager *smgr, struct Sensor *snr)
 {
     struct SensorHashEntry *entry =
@@ -93,6 +99,7 @@ static int sensor_ht_add(struct SensorManager *smgr, struct Sensor *snr)
     return 0;
 }
 
+/** Creates the manager's sensor hash table and populates it with cJSON */
 static int sensor_ht_create(struct SensorManager *smgr)
 {
     int ret;
@@ -150,6 +157,7 @@ static int sensor_ht_create(struct SensorManager *smgr)
     return 0;
 }
 
+/** Destroys the manager's sensor hash table */
 static void sensor_ht_destroy(struct SensorManager *smgr)
 {
     struct SensorHashEntry *entry, *tmp;

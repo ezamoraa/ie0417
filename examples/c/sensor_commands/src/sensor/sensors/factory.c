@@ -9,26 +9,32 @@
 
 typedef struct Sensor * (*sensor_create_fn)(const char *name);
 
+/** Sensor constructor information structure */
 struct SensorCtorInfo {
     const char *type;
     sensor_create_fn create_fn;
 };
 
+/** Sensor constructor structure */
 struct SensorConstructor {
     struct SensorCtorInfo info;
     UT_hash_handle hh;
 };
 
+/** Sensor factory structure */
 struct SensorFactory {
+    /** Head entry for the constructor hash table */
     struct SensorConstructor *ctor_ht;
 };
 
+/** Global array with the supported sensor constructors info */
 struct SensorCtorInfo ctors_info[] = {
   {"temperature", temp_sensor_create},
   {"level", level_sensor_create},
   {"", NULL},
 };
 
+/** Add constructor to the factory's hash table */
 static int ctor_ht_add(struct SensorFactory *sf, struct SensorCtorInfo *info)
 {
     struct SensorConstructor *ctor =
@@ -42,6 +48,7 @@ static int ctor_ht_add(struct SensorFactory *sf, struct SensorCtorInfo *info)
     return 0;
 }
 
+/** Creates the factory's hash table and populates it with the global array info */
 static int ctor_ht_create(struct SensorFactory *sf)
 {
     int ret;
@@ -63,6 +70,7 @@ static int ctor_ht_create(struct SensorFactory *sf)
     return 0;
 }
 
+/** Destroys the factory's constructor hash table */
 static void ctor_ht_destroy(struct SensorFactory *sf)
 {
     struct SensorConstructor *ctor, *tmp;
