@@ -66,6 +66,7 @@ install(
   DESTINATION include
   FILES_MATCHING PATTERN "*.h"
   PATTERN "_*" EXCLUDE
+  PATTERN "external" EXCLUDE
 )
 
 configure_file(

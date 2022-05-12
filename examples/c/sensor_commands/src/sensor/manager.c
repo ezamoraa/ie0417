@@ -3,13 +3,20 @@
 #include <string.h>
 #include <errno.h>
 
+#include <sensor_commands/external/uthash.h>
 #include <sensor_commands/sensor/manager.h>
 #include "sensors/factory.h"
+
+struct SensorHashEntry {
+    struct Sensor *snr;
+    UT_hash_handle hh;
+};
 
 struct SensorManager {
     struct SensorManagerConfig cfg;
     cJSON *cfg_cjson;
-    struct SensorFactory *sfactory;
+    struct SensorFactory *sf;
+    struct SensorHashEntry *sensor_ht;
 };
 
 static cJSON *cjson_handle_create(const char *filename)
@@ -72,8 +79,23 @@ static void cjson_handle_destroy(cJSON* cjson)
     cJSON_Delete(cjson);
 }
 
-static int sensors_init(struct SensorManager *smgr)
+static int sensor_ht_add(struct SensorManager *smgr, struct Sensor *snr)
 {
+    struct SensorHashEntry *entry =
+        malloc(sizeof(struct SensorHashEntry));
+    if (entry == NULL) {
+        fprintf(stderr, "Failed to allocate sensor hash entry\n");
+        return -ENOMEM;
+    }
+    printf("%s: sensor name=%s, type=%s\n", __func__, snr->info.name, snr->info.type);
+    entry->snr = snr;
+    HASH_ADD_KEYPTR(hh, smgr->sensor_ht, snr->info.name, strlen(snr->info.name), entry);
+    return 0;
+}
+
+static int sensor_ht_create(struct SensorManager *smgr)
+{
+    int ret;
     cJSON *sensors = NULL;
     int num_sensors = 0;
 
@@ -83,13 +105,25 @@ static int sensors_init(struct SensorManager *smgr)
         return -1;
     }
 
-    // Iterate over sensor array
+    // Init head entry for sensor hash table
+    smgr->sensor_ht = NULL;
+
+    // Iterate over config array to create sensors
     num_sensors = cJSON_GetArraySize(sensors);
     for(int i = 0; i < num_sensors; i++)
     {
+        struct Sensor *snr = NULL;
         cJSON *sensor, *obj;
         char *name, *type;
         sensor = cJSON_GetArrayItem(sensors, i);
+
+        // Read type and name from JSON
+        obj = cJSON_GetObjectItem(sensor, "type");
+        if (obj == NULL) {
+            fprintf(stderr, "Failed to read sensor type: %s\n", cJSON_GetErrorPtr());
+            return -1;
+        }
+        type = cJSON_GetStringValue(obj);
 
         obj = cJSON_GetObjectItem(sensor, "name");
         if (obj == NULL) {
@@ -98,17 +132,31 @@ static int sensors_init(struct SensorManager *smgr)
         }
         name = cJSON_GetStringValue(obj);
 
-        obj = cJSON_GetObjectItem(sensor, "type");
-        if (obj == NULL) {
-            fprintf(stderr, "Failed to read sensor type: %s\n", cJSON_GetErrorPtr());
+        // Create sensor and add it to hash table
+        snr = sensor_factory_sensor_create(smgr->sf, type, name);
+        if (snr == NULL) {
+            fprintf(stderr, "Failed to create sensor with type: %s, name: %s\n",
+                    type, name);
             return -1;
         }
-        type = cJSON_GetStringValue(obj);
-
-        printf("sensor name=%s, type=%s\n", name, type);
+        ret = sensor_ht_add(smgr, snr);
+        if (ret) {
+            fprintf(stderr, "Failed to add sensor with type: %s, name: %s\n",
+                    snr->info.type, snr->info.name);
+            return ret;
+        }
     }
 
     return 0;
+}
+
+static void sensor_ht_destroy(struct SensorManager *smgr)
+{
+    struct SensorHashEntry *entry, *tmp;
+    HASH_ITER(hh, smgr->sensor_ht, entry, tmp) {
+        HASH_DEL(smgr->sensor_ht, entry);
+        free(entry);
+    }
 }
 
 struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg)
@@ -126,15 +174,15 @@ struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg)
     }
     smgr->cfg_cjson = cjson;
 
-    smgr->sfactory = sensor_factory_create();
-    if (smgr->sfactory == NULL) {
+    smgr->sf = sensor_factory_create();
+    if (smgr->sf == NULL) {
         fprintf(stderr, "Failed to create sensor factory\n");
         return NULL;
     }
 
-    ret = sensors_init(smgr);
+    ret = sensor_ht_create(smgr);
     if (ret) {
-        fprintf(stderr, "Failed to init sensors with ret=%d\n", ret);
+        fprintf(stderr, "Failed to create sensor hash table with ret=%d\n", ret);
         return NULL;
     }
 
@@ -143,7 +191,8 @@ struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg)
 
 void sensor_manager_destroy(struct SensorManager *smgr)
 {
-    sensor_factory_destroy(smgr->sfactory);
+    sensor_ht_destroy(smgr);
+    sensor_factory_destroy(smgr->sf);
     cjson_handle_destroy(smgr->cfg_cjson);
     free(smgr);
 }

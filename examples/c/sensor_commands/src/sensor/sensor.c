@@ -2,11 +2,11 @@
 
 #include <sensor_commands/sensor/sensor.h>
 
-struct Sensor *sensor_create(int param)
+struct Sensor *sensor_create(struct SensorInfo *info)
 {
     struct Sensor *snr =
         (struct Sensor *)calloc(1, sizeof(struct Sensor));
-    snr->member = param;
+    snr->info = *info;
     return snr;
 }
 
