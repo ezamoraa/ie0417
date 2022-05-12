@@ -1,12 +1,14 @@
 #ifndef SENSOR_H_
 #define SENSOR_H_
 
-struct SensorOps;
-
 struct SensorInfo {
-    const char * type;
     const char * name;
+    const char * type;
     const char * unit;
+};
+
+struct SensorOps {
+    double (*read)(struct SensorInfo *info, void *priv);
 };
 
 struct Sensor {
@@ -15,7 +17,9 @@ struct Sensor {
     void *priv;
 };
 
-struct Sensor *sensor_create(struct SensorInfo *info);
+struct Sensor *sensor_create(struct SensorInfo *info,
+                             struct SensorOps *ops,
+                             void *priv);
 
 void sensor_destroy(struct Sensor *snr);
 

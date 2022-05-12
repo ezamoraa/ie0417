@@ -76,6 +76,10 @@ struct SensorFactory *sensor_factory_create(void)
 {
     struct SensorFactory *sf =
         (struct SensorFactory *)calloc(1, sizeof(struct SensorFactory));
+    if (sf == NULL) {
+        fprintf(stderr, "Failed to allocate sensor factory\n");
+        return NULL;
+    }
     ctor_ht_create(sf);
     return sf;
 }

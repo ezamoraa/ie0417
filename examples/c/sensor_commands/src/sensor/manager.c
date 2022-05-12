@@ -165,6 +165,10 @@ struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg)
     cJSON *cjson = NULL;
     struct SensorManager *smgr =
         (struct SensorManager *)calloc(1, sizeof(struct SensorManager));
+    if (smgr == NULL) {
+        fprintf(stderr, "Failed to allocate sensor manager\n");
+        return NULL;
+    }
     smgr->cfg = *cfg;
 
     cjson = cjson_handle_create(smgr->cfg.cfg_filename);
