@@ -1,11 +1,50 @@
 #ifndef MANAGER_H_
 #define MANAGER_H_
 
-struct SensorManager {
-    int member;
+#include <cjson/cJSON.h>
+#include <sensor_commands/sensor/sensor.h>
+
+/** Forward declaration of a sensor manager structure */
+struct SensorManager;
+
+/** Sensor manager configuration structure */
+struct SensorManagerConfig {
+    /** Name of the JSON file with the sensors config */
+    const char *cfg_filename;
 };
 
-struct SensorManager *sensor_manager_create(int param);
+/**
+ * Creates a sensor manager
+ *
+ * The sensor manager is in charge of dealing with the lifecycle
+ * of the sensor devices. It creates the sensors from a JSON
+ * config file and stores them in a hash table for name-based access.
+ *
+ * @param cfg Sensor manager configuration structure.
+ *
+ * @return Pointer to a sensor manager structure.
+ */
+struct SensorManager *sensor_manager_create(struct SensorManagerConfig *cfg);
+
+/**
+ * Gets a sensor from its name
+ *
+ * @param smgr Pointer to a sensor manager structure.
+ * @param name Name of the sensor to get.
+ *
+ * @return Pointer to a sensor structure.
+ */
+struct Sensor *sensor_manager_sensor_get(struct SensorManager *smgr,
+                                         const char *name);
+
+/**
+ * Destroys a sensor manager
+ *
+ * Cleans up all the internal resources in the sensor manager,
+ * including the sensor instances.
+ *
+ * @param smgr Pointer to a sensor manager structure.
+ */
 void sensor_manager_destroy(struct SensorManager *smgr);
 
 #endif // MANAGER_H_

@@ -25,7 +25,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11 ${C_WARNINGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 ${CXX_WARNINGS}")
 
 # Dependencies
-# TODO: Add cJSON pkconfig
+pkg_check_modules(CJSON REQUIRED libcjson>=1.7.15)
+add_definitions(${CJSON_CFLAGS})
+link_directories(${CJSON_LIBRARY_DIRS})
+include_directories(${CJSON_INCLUDE_DIRS})
 
 # Shared library
 ADD_LIB_DIRS(src)
@@ -40,7 +43,7 @@ list(APPEND LIB_SOURCES ${VERSION_SOURCE})
 
 add_library(${LIB_NAME} SHARED ${LIB_SOURCES})
 
-target_link_libraries(${LIB_NAME} pthread atomic)
+target_link_libraries(${LIB_NAME} pthread atomic ${CJSON_LIBRARIES})
 
 set_target_properties(
   ${LIB_NAME} PROPERTIES VERSION
@@ -63,6 +66,7 @@ install(
   DESTINATION include
   FILES_MATCHING PATTERN "*.h"
   PATTERN "_*" EXCLUDE
+  PATTERN "external" EXCLUDE
 )
 
 configure_file(
