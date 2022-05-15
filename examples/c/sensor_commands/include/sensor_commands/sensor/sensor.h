@@ -44,17 +44,17 @@ struct Sensor *sensor_create(struct SensorInfo *info,
 /**
  * Reads the sensor
  *
- * @param snr Sensor structure.
+ * @param ssr Sensor structure.
  *
  * @return Value representing the sensor measurement.
  */
-double sensor_read(struct Sensor *snr);
+double sensor_read(struct Sensor *ssr);
 
 /**
  * Destroys the sensor
  *
- * @param snr Sensor structure.
+ * @param ssr Sensor structure.
  */
-void sensor_destroy(struct Sensor *snr);
+void sensor_destroy(struct Sensor *ssr);
 
 #endif // SENSOR_H_

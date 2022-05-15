@@ -6,11 +6,6 @@
 
 #define MSG_CMD_MAX_SIZE 256
 
-struct Command {
-    void *data;
-    cmd_exec_fn execute;
-};
-
 struct Command *command_create(void *data, cmd_exec_fn execute)
 {
     struct Command *cmd =
@@ -40,10 +35,12 @@ void command_destroy(struct Command *cmd)
     free(cmd);
 }
 
+/** Message command private data */
 struct msg_cmd_data {
     char msg[MSG_CMD_MAX_SIZE + 1];
 };
 
+/** Message command execute function */
 static void msg_cmd_exec_fn(void *data)
 {
     struct msg_cmd_data *cmd_data = data;
@@ -53,6 +50,10 @@ static void msg_cmd_exec_fn(void *data)
 struct Command *msg_command_create(const char *msg)
 {
     struct msg_cmd_data *cmd_data = malloc(sizeof(struct msg_cmd_data));
+    if (cmd_data == NULL) {
+        fprintf(stderr, "Failed to msg command data\n");
+        return NULL;
+    }
     strncpy(cmd_data->msg, msg, MSG_CMD_MAX_SIZE);
 
     return command_create(cmd_data, msg_cmd_exec_fn);

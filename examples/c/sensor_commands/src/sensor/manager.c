@@ -5,11 +5,12 @@
 
 #include <sensor_commands/external/uthash.h>
 #include <sensor_commands/sensor/manager.h>
+#include <sensor_commands/command.h>
 #include "sensors/factory.h"
 
 /** Entry structure to support adding sensors to an UT hash table */
 struct SensorHashEntry {
-    struct Sensor *snr;
+    struct Sensor *ssr;
     UT_hash_handle hh;
 };
 
@@ -85,7 +86,7 @@ static void cjson_handle_destroy(cJSON* cjson)
 }
 
 /** Add sensor to the manager's sensor hash table */
-static int sensor_ht_add(struct SensorManager *smgr, struct Sensor *snr)
+static int sensor_ht_add(struct SensorManager *smgr, struct Sensor *ssr)
 {
     struct SensorHashEntry *entry =
         malloc(sizeof(struct SensorHashEntry));
@@ -93,9 +94,9 @@ static int sensor_ht_add(struct SensorManager *smgr, struct Sensor *snr)
         fprintf(stderr, "Failed to allocate sensor hash entry\n");
         return -ENOMEM;
     }
-    printf("%s: sensor name=%s, type=%s\n", __func__, snr->info.name, snr->info.type);
-    entry->snr = snr;
-    HASH_ADD_KEYPTR(hh, smgr->sensor_ht, snr->info.name, strlen(snr->info.name), entry);
+    printf("%s: sensor name=%s, type=%s\n", __func__, ssr->info.name, ssr->info.type);
+    entry->ssr = ssr;
+    HASH_ADD_KEYPTR(hh, smgr->sensor_ht, ssr->info.name, strlen(ssr->info.name), entry);
     return 0;
 }
 
@@ -119,7 +120,7 @@ static int sensor_ht_create(struct SensorManager *smgr)
     num_sensors = cJSON_GetArraySize(sensors);
     for(int i = 0; i < num_sensors; i++)
     {
-        struct Sensor *snr = NULL;
+        struct Sensor *ssr = NULL;
         cJSON *sensor, *obj;
         char *name, *type;
         sensor = cJSON_GetArrayItem(sensors, i);
@@ -140,16 +141,16 @@ static int sensor_ht_create(struct SensorManager *smgr)
         name = cJSON_GetStringValue(obj);
 
         // Create sensor and add it to hash table
-        snr = sensor_factory_sensor_create(smgr->sf, type, name);
-        if (snr == NULL) {
+        ssr = sensor_factory_sensor_create(smgr->sf, type, name);
+        if (ssr == NULL) {
             fprintf(stderr, "Failed to create sensor with type: %s, name: %s\n",
                     type, name);
             return -1;
         }
-        ret = sensor_ht_add(smgr, snr);
+        ret = sensor_ht_add(smgr, ssr);
         if (ret) {
             fprintf(stderr, "Failed to add sensor with type: %s, name: %s\n",
-                    snr->info.type, snr->info.name);
+                    ssr->info.type, ssr->info.name);
             return ret;
         }
     }
@@ -210,7 +211,38 @@ struct Sensor *sensor_manager_sensor_get(struct SensorManager *smgr,
         fprintf(stderr, "Sensor entry not found for name: %s\n", name);
         return NULL;
     }
-    return entry->snr;
+    return entry->ssr;
+}
+
+/** Sensor read command private data */
+struct ssr_read_cmd_data {
+    struct Sensor *ssr;
+};
+
+/** Sensor read command execute function */
+static void ssr_read_cmd_exec_fn(void *data)
+{
+    struct ssr_read_cmd_data *cmd_data = data;
+    struct Sensor *ssr = cmd_data->ssr;
+    double val = sensor_read(ssr);
+    printf("Sensor read command: [%s]: %s: %f %s\n",
+           ssr->info.type, ssr->info.name, val, ssr->info.unit);
+}
+
+struct Command *sensor_manager_read_cmd_create(
+    struct SensorManager *smgr,
+    const char *name)
+{
+    struct ssr_read_cmd_data *cmd_data = malloc(sizeof(struct ssr_read_cmd_data));
+    if (cmd_data == NULL) {
+        fprintf(stderr, "Failed to allocate sensor read command data\n");
+        return NULL;
+    }
+    struct Sensor * ssr = sensor_manager_sensor_get(smgr, name);
+    if (ssr == NULL) return NULL;
+    cmd_data->ssr = ssr;
+
+    return command_create(cmd_data, ssr_read_cmd_exec_fn);
 }
 
 void sensor_manager_destroy(struct SensorManager *smgr)

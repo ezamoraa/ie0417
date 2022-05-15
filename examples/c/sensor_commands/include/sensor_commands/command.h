@@ -4,9 +4,12 @@
 /** Type of the function that a command can execute */
 typedef void (*cmd_exec_fn)(void *data);
 
-/** Structure with the CommandRunner configuration */
-struct CommandRunnerConfig {
-    int cmd_qsize;
+/** Command structure definition */
+struct Command {
+    /** Private data to pass to the execute function */
+    void *data;
+    /** Pointer to the command execute function */
+    cmd_exec_fn execute;
 };
 
 /**
@@ -23,7 +26,7 @@ struct CommandRunnerConfig {
 struct Command *command_create(void *data, cmd_exec_fn execute);
 
 /**
- * Execute the command function.
+ * Executes the command function
  *
  * @param cmd command structure.
  */
@@ -40,7 +43,7 @@ void command_destroy(struct Command *cmd);
  * Creates a message command
  *
  * A message command prints a message when executed.
- * It is destroyed using the command_destroy API.
+ * It should be destroyed using the command_destroy API.
  *
  * @param msg     Message to be printed
  *
