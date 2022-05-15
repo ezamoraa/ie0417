@@ -120,7 +120,7 @@ static int cmd_queue_send(struct CmdQueue *queue,
     ret = pthread_mutex_unlock(&queue->lock);
     if (ret) return ret;
 
-    // Notify receiver of queue being occupied
+    // Notify receiver of queue holding some commands
     sem_post(&queue->occupied);
 
     return 0;

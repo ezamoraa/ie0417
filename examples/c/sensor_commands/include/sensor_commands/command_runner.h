@@ -10,7 +10,7 @@ struct CommandRunnerConfig {
 /**
  * Creates a command runner
  *
- * A command runner executes commands coming from a queue in a separate thread
+ * A command runner executes commands coming from a queue in a consumer thread
  *
  * @param cfg  Command runner configuration
  *
@@ -39,7 +39,7 @@ int command_runner_start(struct CommandRunner *cmd_runner);
 int command_runner_stop(struct CommandRunner *cmd_runner);
 
 /**
- * Sends a command to the command runner.
+ * Sends a command to the command runner
  *
  * @param cmd_runner command runner structure.
  *
