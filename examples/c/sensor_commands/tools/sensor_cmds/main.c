@@ -51,6 +51,15 @@ int main(int argc, char **argv) {
 
     printf("lib version: %s\n", version);
 
+    // Play with a message command
+    struct Command *msg_cmd = msg_command_create("This is a test message!\n");
+    if (msg_cmd == NULL) {
+        fprintf(stderr, "Failed to create message command\n");
+        return -1;
+    }
+    command_execute(msg_cmd);
+    command_destroy(msg_cmd);
+
     // Create sensor manager
     smgr_cfg.cfg_filename = cfg_filename;
     smgr = sensor_manager_create(&smgr_cfg);
@@ -59,7 +68,7 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    // Try to use some sensors
+    // Play with some sensors
     for (int i=0;; i++) {
         const char *name = sensor_names[i];
         if (strlen(name) == 0) break;

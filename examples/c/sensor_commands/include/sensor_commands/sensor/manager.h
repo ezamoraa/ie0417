@@ -4,9 +4,6 @@
 #include <cjson/cJSON.h>
 #include <sensor_commands/sensor/sensor.h>
 
-/** Forward declaration of a sensor manager structure */
-struct SensorManager;
-
 /** Sensor manager configuration structure */
 struct SensorManagerConfig {
     /** Name of the JSON file with the sensors config */
