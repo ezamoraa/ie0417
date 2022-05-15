@@ -7,28 +7,28 @@ struct Sensor *sensor_create(struct SensorInfo *info,
                              struct SensorOps *ops,
                              void *priv)
 {
-    struct Sensor *snr =
+    struct Sensor *ssr =
         (struct Sensor *)calloc(1, sizeof(struct Sensor));
-    if (snr == NULL) {
+    if (ssr == NULL) {
         fprintf(stderr, "Failed to allocate sensor\n");
         return NULL;
     }
-    snr->info = *info;
-    snr->ops = ops;
-    snr->priv = priv;
-    return snr;
+    ssr->info = *info;
+    ssr->ops = ops;
+    ssr->priv = priv;
+    return ssr;
 }
 
-double sensor_read(struct Sensor *snr)
+double sensor_read(struct Sensor *ssr)
 {
     double val = 0;
-    if (snr->ops && snr->ops->read) {
-        val = snr->ops->read(&snr->info, snr->priv);
+    if (ssr->ops && ssr->ops->read) {
+        val = ssr->ops->read(&ssr->info, ssr->priv);
     }
     return val;
 }
 
-void sensor_destroy(struct Sensor *snr)
+void sensor_destroy(struct Sensor *ssr)
 {
-    free(snr);
+    free(ssr);
 }

@@ -8,59 +8,91 @@
 
 #include <sensor_commands/version.h>
 #include <sensor_commands/command.h>
+#include <sensor_commands/command_runner.h>
 #include <sensor_commands/sensor/sensor.h>
 #include <sensor_commands/sensor/manager.h>
 
-int main(int argc, char **argv) {
-    int opt;
-    int status = 0;
-    int a = 0, b = 0;
-    bool flag = false;
-    struct SensorManagerConfig smgr_cfg = {};
-    struct SensorManager *smgr = NULL;
-    struct Sensor *snr = NULL;
-    const char *version = NULL;
-    char cfg_filename[PATH_MAX + 1];
+static int command_runner_experiment(void)
+{
+    int ret;
 
-    const char *sensor_names[] = {
-      "temp-eie206",
-      "level-eie301",
-      ""
+    struct CommandRunnerConfig cmd_runner_cfg = {
+      .q_max_size = 100,
     };
-
-    while((opt = getopt(argc, (char *const *)argv, "b:c:f")) != -1) {
-        switch(opt) {
-            case 'b':
-                b = atoi(optarg);
-                break;
-            case 'c':
-                strncpy(cfg_filename, optarg, PATH_MAX);
-                break;
-            case 'f':
-                flag = true;
-                break;
-            default :
-                (void)fprintf(stderr, "Unknown option -%c\n", opt);
-                return -EINVAL;
-        }
+    struct CommandRunner *cmd_runner = command_runner_create(&cmd_runner_cfg);
+    if (cmd_runner == NULL) {
+        fprintf(stderr, "Failed to create command runner\n");
+        return -1;
     }
-    printf("a: %d, b: %d, flag: %d\n", a, b, (int)flag);
-
-    status = sensor_commands_version(&version);
-    if (status) return status;
-
-    printf("lib version: %s\n", version);
-
-    // Play with a message command
-    struct Command *msg_cmd = msg_command_create("This is a test message!\n");
+    struct Command *msg_cmd = msg_command_create("This is a command test message!\n");
     if (msg_cmd == NULL) {
         fprintf(stderr, "Failed to create message command\n");
         return -1;
     }
-    command_execute(msg_cmd);
-    command_destroy(msg_cmd);
 
-    // Create sensor manager
+    printf("++++++++++ CommandRunner experiment ++++++++++\n");
+
+    ret = command_runner_start(cmd_runner);
+    if (ret) {
+        fprintf(stderr, "Failed to start command runner with ret=%d\n", ret);
+        return -1;
+    }
+
+    for (int i=0; i < 10; i++) {
+        ret = command_runner_send(cmd_runner, msg_cmd);
+        if (ret) {
+            fprintf(stderr, "Failed to send command to command runner with ret=%d\n", ret);
+            return -1;
+        }
+    }
+
+    ret = command_runner_stop(cmd_runner);
+    if (ret) {
+        fprintf(stderr, "Failed to stop command runner with ret=%d\n", ret);
+        return -1;
+    }
+
+    command_destroy(msg_cmd);
+    command_runner_destroy(cmd_runner);
+
+    return 0;
+}
+
+static int sensor_command_experiment(const char *cfg_filename)
+{
+    int ret;
+    struct SensorManagerConfig smgr_cfg = {};
+    struct SensorManager *smgr = NULL;
+    struct Command *cmd = NULL;
+
+    #define NUM_SENSORS 5
+
+    const char *sensor_names[NUM_SENSORS] = {
+      "level-eie202",
+      "temp-eie206",
+      "temp-eie204",
+      "level-eie301",
+      "temp-eie208",
+    };
+    struct Command *commands[NUM_SENSORS] = {};
+
+    struct CommandRunnerConfig cmd_runner_cfg = {
+      .q_max_size = 100,
+    };
+    struct CommandRunner *cmd_runner = command_runner_create(&cmd_runner_cfg);
+    if (cmd_runner == NULL) {
+        fprintf(stderr, "Failed to create command runner\n");
+        return -1;
+    }
+
+    printf("++++++++++ SensorManager experiment ++++++++++\n");
+
+    ret = command_runner_start(cmd_runner);
+    if (ret) {
+        fprintf(stderr, "Failed to start command runner with ret=%d\n", ret);
+        return -1;
+    }
+
     smgr_cfg.cfg_filename = cfg_filename;
     smgr = sensor_manager_create(&smgr_cfg);
     if (smgr == NULL) {
@@ -68,21 +100,68 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    // Play with some sensors
-    for (int i=0;; i++) {
+    for (int i=0; i < NUM_SENSORS; i++) {
         const char *name = sensor_names[i];
         if (strlen(name) == 0) break;
 
-        snr = sensor_manager_sensor_get(smgr, name);
-        if (snr != NULL) {
-            double val = sensor_read(snr);
-            printf("Read value: %f\n", val);
+        cmd = sensor_manager_read_cmd_create(smgr, name);
+        if (cmd != NULL) {
+            commands[i] = cmd;
+            ret = command_runner_send(cmd_runner, cmd);
+            if (ret) {
+                fprintf(stderr, "Failed to send command to command runner with ret=%d\n", ret);
+                return -1;
+            }
         } else {
-            printf("Sensor with name %s not found\n", name);
+            printf("Failed to get read command for sensor with name %s\n", name);
         }
     }
 
-    sensor_manager_destroy(smgr);
+    ret = command_runner_stop(cmd_runner);
+    if (ret) {
+        fprintf(stderr, "Failed to stop command runner with ret=%d\n", ret);
+        return -1;
+    }
 
-    return status;
+    for (int i=0; i < NUM_SENSORS; i++) {
+        command_destroy(commands[i]);
+        commands[i] = NULL;
+    }
+
+    sensor_manager_destroy(smgr);
+    command_runner_destroy(cmd_runner);
+
+    return 0;
+}
+
+int main(int argc, char **argv) {
+    int opt;
+    int ret = 0;
+    const char *version = NULL;
+    char cfg_filename[PATH_MAX + 1];
+
+    // Parse cmdline options
+    while((opt = getopt(argc, (char *const *)argv, "c:")) != -1) {
+        switch(opt) {
+            case 'c':
+                strncpy(cfg_filename, optarg, PATH_MAX);
+                break;
+            default :
+                (void)fprintf(stderr, "Unknown option -%c\n", opt);
+                return -EINVAL;
+        }
+    }
+
+    // Check library version
+    ret = sensor_commands_version(&version);
+    if (ret) return ret;
+    printf("lib version: %s\n", version);
+
+    // Play with command runner
+    command_runner_experiment();
+
+    // Play with sensor manager
+    sensor_command_experiment(cfg_filename);
+
+    return ret;
 }

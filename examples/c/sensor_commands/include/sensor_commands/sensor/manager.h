@@ -35,6 +35,19 @@ struct Sensor *sensor_manager_sensor_get(struct SensorManager *smgr,
                                          const char *name);
 
 /**
+ * Creates a sensor read command from a sensor name.
+ * It should be destroyed using the command_destroy API.
+ *
+ * @param smgr Pointer to a sensor manager structure.
+ * @param name Name of the sensor.
+ *
+ * @return Pointer to a sensor structure.
+ */
+struct Command *sensor_manager_read_cmd_create(
+    struct SensorManager *smgr,
+    const char *name);
+
+/**
  * Destroys a sensor manager
  *
  * Cleans up all the internal resources in the sensor manager,
