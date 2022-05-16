@@ -26,7 +26,7 @@ struct Command {
 struct Command *command_create(void *data, cmd_exec_fn execute);
 
 /**
- * Execute the command function
+ * Executes the command function
  *
  * @param cmd command structure.
  */

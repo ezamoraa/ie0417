@@ -12,7 +12,7 @@
 #include <sensor_commands/sensor/sensor.h>
 #include <sensor_commands/sensor/manager.h>
 
-static int command_runner_experiment(void)
+static int basic_command_experiment(void)
 {
     int ret;
 
@@ -157,10 +157,10 @@ int main(int argc, char **argv) {
     if (ret) return ret;
     printf("lib version: %s\n", version);
 
-    // Play with command runner
-    command_runner_experiment();
+    // Experiment with basic commands
+    basic_command_experiment();
 
-    // Play with sensor manager
+    // Experiment with sensor commands
     sensor_command_experiment(cfg_filename);
 
     return ret;
