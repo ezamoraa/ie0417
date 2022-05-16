@@ -56,11 +56,11 @@ dkms.conf
 *.egg
 *.egg-info
 dist/*
-build/*
 *.py[cod]
 __pycache__
 
 # Devenv
+build
 .vagrant
 .Trash*
 .ipynb_checkpoints/
