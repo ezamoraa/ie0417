@@ -3,9 +3,6 @@
 
 #include <sensor_commands/sensor/sensor.h>
 
-/** Forward declaration of a sensor factory structure */
-struct SensorFactory;
-
 /**
  * Creates a sensor factory
  *

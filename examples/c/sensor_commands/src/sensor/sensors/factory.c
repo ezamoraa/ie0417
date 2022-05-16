@@ -28,7 +28,7 @@ struct SensorFactory {
 };
 
 /** Global array with the supported sensor constructors info */
-struct SensorCtorInfo ctors_info[] = {
+static struct SensorCtorInfo ctors_info[] = {
   {"temperature", temp_sensor_create},
   {"level", level_sensor_create},
   {"", NULL},
