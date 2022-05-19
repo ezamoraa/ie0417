@@ -1,0 +1,30 @@
+@startuml
+
+title "Sensor Commands - Sequence Diagram"
+
+actor App as app
+entity SensorManager as smgr
+entity CommandRunner as cmdr
+entity Command as cmd
+entity Sensor as ssr
+
+app -> smgr: Get sensor read command
+smgr -> smgr: Get sensor by name
+smgr -> smgr: Create SensorReadCommand
+app <-- smgr
+app -> cmdr: Send sensor read command
+app <-- cmdr
+par App work while runner process cmd
+cmdr -> cmdr: Receive command from queue
+cmdr -> cmd: Execute command
+cmd -> ssr: Read sensor value
+cmd <-- ssr
+cmd -> cmd: Process sensor reading
+cmdr <-- cmd
+else
+app -> app: Do some application work
+app -> cmdr: Send another command
+app <-- cmdr
+end
+
+@enduml

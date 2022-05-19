@@ -1,0 +1,32 @@
+   @startuml
+
+   title Sensor Commands - Class Diagram
+
+   class CommandRunner
+   abstract class Command {
+   + Execute()
+   }
+   class MessageCommand
+   class SensorReadCommand
+   class SensorManager
+   abstract class Sensor {
+   + Read()
+   }
+   class TempSensor
+   class LevelSensor
+   class SensorFactory
+
+   Command <-right- SensorManager
+   Command <-up- CommandRunner
+   Command <|-left- MessageCommand
+   Command <|-down- SensorReadCommand
+   Sensor <-left- SensorReadCommand
+   Sensor -up-o SensorManager
+   Sensor <|-down- TempSensor
+   Sensor <|-right- LevelSensor
+   Sensor <-up- SensorFactory
+   TempSensor <-left- SensorFactory
+   LevelSensor <-right- SensorFactory
+   SensorFactory <-left- SensorManager
+
+   @enduml
