@@ -56,7 +56,7 @@ CMD /usr/sbin/sshd -D -o UseDNS=no
 
 # Install developer tools
 RUN apt-get update && apt-get --yes --no-install-recommends install \
-    python3 python3-setuptools python3-pip \
+    python3 python3-setuptools python3-pip python3.8-venv \
     vim nano tree ack-grep bash-completion less \
     build-essential cmake pkg-config libtool automake \
     lcov gdb gdbserver valgrind \

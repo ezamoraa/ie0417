@@ -16,7 +16,7 @@ $ source .venv/bin/activate
 $ pip3 install -e .
 ```
 
-Una vez instalado, puede correr el ejemplo ejecutando el siguiente comando desde el directorio base del ejemplo:
+Una vez instalado, puede correr el ejemplo ejecutando el siguiente comando desde el directorio base del mismo:
 
 ```console
 $ sensor_cmds

@@ -23,3 +23,7 @@ RISE==5.7.1
 # Testing requirements
 tox==3.14.0
 flake8==3.7.9
+
+# Package build requirements
+build==0.7.0
+wheel==0.37.1
