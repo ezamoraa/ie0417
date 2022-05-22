@@ -1,0 +1,16 @@
+set(LIB_SUBDIR ${CMAKE_SOURCE_DIR})
+
+macro(ADD_LIB_DIRS)
+  foreach(SUBDIR ${ARGN})
+    set(LIB_SUBDIR ${LIB_SUBDIR}/${SUBDIR})
+    include(${LIB_SUBDIR}/CMakeLists.txt)
+    # Recover LIB_SUBDIR (before include)
+    string(REGEX REPLACE /${SUBDIR}/*$ "" LIB_SUBDIR ${LIB_SUBDIR})
+  endforeach(SUBDIR)
+endmacro(ADD_LIB_DIRS)
+
+macro(ADD_LIB_SOURCES)
+  foreach(SOURCEFILE ${ARGN})
+    set(LIB_SOURCES ${LIB_SOURCES} ${LIB_SUBDIR}/${SOURCEFILE})
+  endforeach(SOURCEFILE)
+endmacro(ADD_LIB_SOURCES)

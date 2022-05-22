@@ -18,7 +18,7 @@ Su equipo en ``eieLabs`` deberá implementar la funcionalidad básica para el pr
 
 Su equipo decidió que ``eieDevice`` será implementado utilizando C. Se concluyó que este lenguaje permite tener un mejor control de la implementación para soportar una gran variedad de dispositivos, incluyendo algunos con recursos limitados de procesamiento y memoria. Además, se considera que esta decisión permitirá realizar optimizaciones de bajo nivel para lograr un alto rendimiento en el sistema.
 
-Se decidió utilizar una arquitectura tipo `RPC <https://www.geeksforgeeks.org/remote-procedure-call-rpc-in-operating-system/>`_ para enviar las solicitudes de comandos desde ``eieManager`` hasta las instancias de ``eieDevice``. Para implementar este mecanismo de comunicación se utilizará la biblioteca de mensajería `ZeroMQ <https://zeromq.org/>`_ para C, también llamada `CZMQ <http://czmq.zeromq.org/>`_. Puede referirse al manual `The ZeroMQ Guide - for C developers <https://lqhl.me/resources/zguide-c.pdf>`_ para más detalles sobre su uso, así como otros ejemplos en internet.
+Se decidió utilizar una arquitectura tipo `RPC <https://www.geeksforgeeks.org/remote-procedure-call-rpc-in-operating-system/>`_ para enviar las solicitudes de comandos desde ``eieManager`` hasta las instancias de ``eieDevice``. Para implementar este mecanismo de comunicación se utilizará la biblioteca de mensajería `ZeroMQ <https://zeromq.org/>`_ para C, también llamada `CZMQ (high-level API) <http://czmq.zeromq.org/>`_. Puede referirse al manual `The ZeroMQ Guide - for C developers <https://lqhl.me/resources/zguide-c.pdf>`_ así como a los ejemplos del curso en ``examples/c/zmq_demo`` y ``examples/python/zmq_demo``.
 
 Una instancia de ``eieDevice`` puede verse como un programa que corre un servidor de ``ZMQ`` (socket ``ZMQ_REP``), que responde a solicitudes de un cliente (socket ``ZMQ_REQ``). En este diseño, se visualiza que ``eieManager`` va a tener un cliente de ``ZMQ`` en cada instancia de ``Device``.
 
@@ -122,7 +122,7 @@ Implementación
 
 * Implemente el componente ``CommandManager`` de la biblioteca ``eie_device``, tal como se indicó en la introducción. Las funciones de este pueden llamarse desde el ``TransportServer``, con el objetivo de procesar el mensaje de solicitud del comando y generar una respuesta válida de vuelta al socket.
 
-* Implemente la aplicación ``eie_device_server`` para responder a solicitudes de comandos utilizando los componentes de la bibliteca ``eie_device``. Para ejercitar el servidor puede utilizar un cliente basado en Python con el paquete `pyzmq <https://pypi.org/project/pyzmq>`_ y codificar los mensajes con el paquete de `json <https://docs.python.org/3/library/json.html>`_.
+* Implemente la aplicación ``eie_device_server`` para responder a solicitudes de comandos utilizando los componentes de la bibliteca ``eie_device``. Para ejercitar el servidor puede utilizar un cliente basado en Python con el paquete `pyzmq <https://pypi.org/project/pyzmq>`_ y codificar los mensajes con los paquetes de `struct <https://docs.python.org/3/library/struct.html>`_ (request ``header``) y `json <https://docs.python.org/3/library/json.html>`_ (request ``payload`` y response). Refiérase a ``examples/python/zmq_demo`` para un ejemplo de codificar una estructura compatible con C utilizando el paquete ``struct`` en Python.
 
 * Implemente y verifique un par de comandos para demostrar el funcionamiento del sistema:
 
