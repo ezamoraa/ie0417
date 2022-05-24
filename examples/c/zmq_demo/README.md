@@ -12,6 +12,7 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ sudo make install
+$ sudo ldconfig
 ```
 
 ```console
@@ -21,6 +22,7 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ sudo make install
+$ sudo ldconfig
 ```
 
 Desde el contenedor de desarrollo en el directorio base del ejemplo (`examples/c/zmq_demo/`) ejecute los siguiente comandos:
