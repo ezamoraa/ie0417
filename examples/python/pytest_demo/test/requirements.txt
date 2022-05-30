@@ -1,0 +1,14 @@
+# Debugging
+ipdb
+
+# Syntax
+flake8
+pep8-naming
+
+# Testing
+pytest
+pytest-cov
+pytest-mock
+pytest-randomly
+pytest-repeat
+pytest-timeout
