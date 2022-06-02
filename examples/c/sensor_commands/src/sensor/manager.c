@@ -220,13 +220,14 @@ struct ssr_read_cmd_data {
 };
 
 /** Sensor read command execute function */
-static void ssr_read_cmd_exec_fn(void *data)
+static int ssr_read_cmd_exec_fn(void *data)
 {
     struct ssr_read_cmd_data *cmd_data = data;
     struct Sensor *ssr = cmd_data->ssr;
     double val = sensor_read(ssr);
     printf("Sensor read command: [%s]: %s: %f %s\n",
            ssr->info.type, ssr->info.name, val, ssr->info.unit);
+    return 0;
 }
 
 struct Command *sensor_manager_read_cmd_create(

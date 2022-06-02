@@ -47,6 +47,11 @@ static int cmd_queue_init(struct CmdQueue *queue,
 {
     int ret;
 
+    if (max_len <= 0) {
+        fprintf(stderr, "Queue max length must be positive\n");
+        return ERANGE;
+    }
+
     if (max_len >= SEM_VALUE_MAX) {
         fprintf(stderr, "Queue max length %d exceeds SEM_VALUE_MAX=%d\n",
                 max_len, SEM_VALUE_MAX);
@@ -177,7 +182,7 @@ static void *cmd_runner_consumer(void *data)
         }
         // For now just execute the command immediately
         // TODO: Implement ratelimiter
-        command_execute(cmd);
+        (void)command_execute(cmd);
     }
     return NULL;
 }
@@ -208,6 +213,10 @@ struct CommandRunner * command_runner_create(struct CommandRunnerConfig *cfg)
 int command_runner_start(struct CommandRunner *cmd_runner)
 {
     int ret;
+    if (cmd_runner == NULL) {
+        fprintf(stderr, "Command runner is NULL\n");
+        return -1;
+    }
 
     ret = pthread_create(&cmd_runner->tid, NULL, cmd_runner_consumer, cmd_runner);
     if (ret) {
@@ -221,6 +230,10 @@ int command_runner_stop(struct CommandRunner *cmd_runner)
 {
     int ret;
     struct Command cmd = {};
+    if (cmd_runner == NULL) {
+        fprintf(stderr, "Command runner is NULL\n");
+        return -1;
+    }
 
     // Send special command (execute == NULL) as stop signal
     ret = cmd_queue_send(&cmd_runner->queue, &cmd);
@@ -240,11 +253,24 @@ int command_runner_stop(struct CommandRunner *cmd_runner)
 int command_runner_send(struct CommandRunner *cmd_runner,
                         struct Command *cmd)
 {
+    if (cmd_runner == NULL) {
+        fprintf(stderr, "Command runner is NULL\n");
+        return -1;
+    }
+    if (cmd == NULL) {
+        fprintf(stderr, "Command is NULL\n");
+        return -1;
+    }
     return cmd_queue_send(&cmd_runner->queue, cmd);
 }
 
-void command_runner_destroy(struct CommandRunner *cmd_runner)
+int command_runner_destroy(struct CommandRunner *cmd_runner)
 {
+    if (cmd_runner == NULL) {
+        fprintf(stderr, "Command runner is NULL\n");
+        return -1;
+    }
     cmd_queue_uninit(&cmd_runner->queue);
     free(cmd_runner);
+    return 0;
 }
