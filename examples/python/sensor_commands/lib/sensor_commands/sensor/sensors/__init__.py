@@ -1,6 +1,7 @@
 """
 sensors module entry point.
 """
+from typing import List, Type
 from ..sensor import Sensor
 
 from .temp import TempSensor
@@ -19,11 +20,34 @@ class SensorFactory():
         }
 
     @property
-    def supported_types(self):
+    def supported_types(self) -> List[str]:
         """
         Returns the list of names for the supported sensor types.
         """
-        return [stype for stype in self.sensor_type_to_cls.keys()]
+        return [stype for stype in self._sensor_type_to_cls.keys()]
+
+    def register_type_cls(self, stype: str, cls: Type[Sensor]):
+        """
+        Register a new sensor type in the factory.
+
+        :param str stype: Sensor type.
+        :param cls: Sensor class.
+        """
+        assert stype not in self._sensor_type_to_cls, (
+            "Sensor type already registered"
+        )
+        self._sensor_type_to_cls[stype] = cls
+
+    def unregister_type_cls(self, stype: str):
+        """
+        Unregisters a sensor type from the factory.
+
+        :param str stype: Sensor type.
+        """
+        assert stype in self._sensor_type_to_cls, (
+            "Sensor type not registered"
+        )
+        del self._sensor_type_to_cls[stype]
 
     def __call__(self, name: str, stype: str) -> Sensor:
         """

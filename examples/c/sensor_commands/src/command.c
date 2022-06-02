@@ -25,14 +25,23 @@ struct Command *command_create(void *data, cmd_exec_fn execute)
     return cmd;
 }
 
-void command_execute(struct Command *cmd)
+int command_execute(struct Command *cmd)
 {
-    cmd->execute(cmd->data);
+    if (cmd == NULL) {
+        fprintf(stderr, "Command is NULL\n");
+        return -1;
+    }
+    return cmd->execute(cmd->data);
 }
 
-void command_destroy(struct Command *cmd)
+int command_destroy(struct Command *cmd)
 {
+    if (cmd == NULL) {
+        fprintf(stderr, "Command is NULL\n");
+        return -1;
+    }
     free(cmd);
+    return 0;
 }
 
 /** Message command private data */
@@ -41,10 +50,11 @@ struct msg_cmd_data {
 };
 
 /** Message command execute function */
-static void msg_cmd_exec_fn(void *data)
+static int msg_cmd_exec_fn(void *data)
 {
     struct msg_cmd_data *cmd_data = data;
     printf("%s", cmd_data->msg);
+    return 0;
 }
 
 struct Command *msg_command_create(const char *msg)

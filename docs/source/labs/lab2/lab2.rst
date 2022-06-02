@@ -116,10 +116,6 @@ Evaluación
 ==========
 Este laboratorio se realizará preferiblemente en grupos de 2 o 3 personas.
 
-.. tip::
-
-   A pesar de distribuir la documentación entre los miembros del grupo, asegúrese de discutir el diseño y que todos los miembros entiendan los diferentes apartados. Esto es importante para su formación.
-
 Rúbrica
 -------
 

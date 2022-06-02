@@ -52,7 +52,9 @@ int command_runner_send(struct CommandRunner *cmd_runner,
  * Destroys the command runner
  *
  * @param cmd_runner command runner structure.
+ *
+ * @return 0 on success, negative number on error
  */
-void command_runner_destroy(struct CommandRunner *cmd_runner);
+int command_runner_destroy(struct CommandRunner *cmd_runner);
 
 #endif // COMMAND_RUNNER_H_

@@ -10,6 +10,17 @@ Este ejemplo consiste en un sistema genérico de administración de sensores. El
 - Implementación de una tabla hash
 
 ## Pasos de construcción
+Para instalar manualmente la dependencia de `cJSON`, puede ejecutar los siguiente pasos:
+
+```console
+$ git clone https://github.com/DaveGamble/cJSON.git
+$ cd cJSON
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make install
+```
+
 Desde el contenedor de desarrollo en el directorio base del ejemplo (`examples/c/sensor_commands/`) ejecute los siguiente comandos:
 
 ```console
