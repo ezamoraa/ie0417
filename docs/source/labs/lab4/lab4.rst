@@ -43,8 +43,8 @@ Las pruebas unitarias para la versión de C se centrarán en el ``CommandRunner`
 * Cree una clase fixture de nombre ``command_runner``. Esta se debe encargar de:
 
   * Instanciar un generador aleatorio de la clase ``testutil::rand_gen``.
-  * Crear el ``CommandRunner`` en el ``SetUp``. Aleatorice de manera reproducible el parámetro de configuración ``q_max_size`` entre ``1`` y ``1000``. Esto significa que con el mismo valor de ``--gtest_random_seed=<val>`` se debe obtener el mismo número aleatorio para ``q_max_size``:
-  `` Destruir el ``CommandRunner`` en el ``TearDown``.
+  * Crear el ``CommandRunner`` en el ``SetUp``. Aleatorice de manera reproducible el parámetro de configuración ``q_max_size`` entre ``1`` y ``1000``. Esto significa que con el mismo valor de ``--gtest_random_seed=<val>`` se debe obtener el mismo número aleatorio para ``q_max_size``.
+  * Destruir el ``CommandRunner`` en el ``TearDown``.
   * Debe verificar que tanto la creación como la destrucción del ``CommandRunner`` ocurren de forma exitosa utilizando asserts de ``googletest``.
 
 .. tip::
