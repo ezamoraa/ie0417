@@ -33,6 +33,12 @@ Por ejemplo, para publicar un mensaje de prueba en un topic llamado `test_topic`
 $ mosquitto_pub -h 172.17.0.1 -t test_topic -m "Hello!"
 ```
 
+Para subscribirse e imprimir mensajes provenientes de un topic llamado `test_topic`.
+
+```console
+$ mosquitto_sub -h 172.17.0.1 -t test_topic
+```
+
 Note que la dirección IP puede cambiar, si se ejecuta desde dentro del contenedor puede ser la dirección del host dada por la interfaz `docker0`.
 
 ## Tests unitarios
