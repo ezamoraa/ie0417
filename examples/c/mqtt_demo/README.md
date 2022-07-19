@@ -1,4 +1,4 @@
-# Gtest demo (C/C++)
+# MQTT demo (C/C++)
 
 Esta carpeta contiene un ejemplo de `paho.mqtt.c` ([repo](https://github.com/eclipse/paho.mqtt.c), [docs](https://www.eclipse.org/paho/files/mqttdoc/MQTTClient/html/index.html)) con tests unitarios de `gtest`.
 
